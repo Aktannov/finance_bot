@@ -38,12 +38,22 @@ def data():
     return list_
 
 
-
 def schet(tg_id):
     acha = session.query(Money.cash).filter(Money.telegram_id == str(tg_id)).all()
     a = [x for i in acha for x in i]
     print(a)
     return a[0]
+
+
+def pluss(num, tg_id):
+    session.query(Money).filter(Money.telegram_id == str(tg_id)).update({Money.cash: Money.cash + num})
+    session.commit()
+    return session.query(Money.cash).filter(Money.telegram_id == str(tg_id)).all()[0][0]
+
+def minuss(num, tg_id):
+    session.query(Money).filter(Money.telegram_id == str(tg_id)).update({Money.cash: Money.cash - num})
+    session.commit()
+    return session.query(Money.cash).filter(Money.telegram_id == str(tg_id)).all()[0][0]
 # a = session.query(Money.id).all()
 # print(a)
 
